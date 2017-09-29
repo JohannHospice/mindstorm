@@ -1,3 +1,4 @@
 * <29-09-1027>
 ** À faire:
--- prendre un RDV pour le material
+   -- prendre un RDV avec Gio ou Alex pour le material
+   
