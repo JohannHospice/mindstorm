@@ -1,4 +1,9 @@
-* <29-09-1027>
+* <29-09-2017>
 ** À faire:
    -- prendre un RDV avec Gio ou Alex pour le material
-   
+
+
+* <06-09-2017>
+** À Faire:
+- Monter un suiveur de ligne
+- Affichier Hello World sur l'écran du robot (debranché)   
