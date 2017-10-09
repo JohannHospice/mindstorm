@@ -8,7 +8,7 @@
 - Download [leJOS EV3 0.9.1](https://sourceforge.net/projects/ev3.lejos.p/files/)
 - Link the projet with the leJos librarie in:
     ```
-    <path_to_lejos>/lib/ev3/ev3classes.jar"
+    <path_to_lejos>/lib/ev3/ev3classes.jar
     ```
     
 ## Links
