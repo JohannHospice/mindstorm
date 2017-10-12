@@ -1,0 +1,14 @@
+à faire:
+	suivre instructions depuis <building.pdf>:
+		(*): adapter les instructions du manuel
+		montage:
+			- 3eme roue fixation arriere : 33 - 38
+			- roue gauche: 39 - 40 (*)
+			- remplacer longue barre fixation avant: 42 - 43
+			- evo4 fixation avant: 44 - 47 (*)
+			- evo4 fixation lateral: 48 - 50 (*)
+			- evo4 fixation arriere: 51 - 52 
+			- 3eme roue ajout : 53 - 55
+
+	autre:
+		- prendre 3 cables court (pour liaison evo3-composant)
