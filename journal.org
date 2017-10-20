@@ -7,3 +7,9 @@
 ** À Faire:
 - Monter un suiveur de ligne
 - Affichier Hello World sur l'écran du robot (debranché)   
+
+* <20-10-2017> Alex
+** Fait:
+- Monté le robot
+** À Faire:
+- Faire le robot bouger 
