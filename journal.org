@@ -13,3 +13,9 @@
 - Monté le robot
 ** À Faire:
 - Faire le robot bouger 
+
+* <10-11-2017> Alex
+** Fait:
+- Le robot bouge
+** À Faire:
+- Apprentissage et reconaissance des couleurs
