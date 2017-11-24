@@ -19,3 +19,8 @@
 - Le robot bouge
 ** À Faire:
 - Apprentissage et reconaissance des couleurs
+
+* <24-11-2017> Alex
+** Fait:
+** À Faire:
+  - Installer les bons outils pour le development
