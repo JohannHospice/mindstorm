@@ -34,4 +34,11 @@ public class Engine {
     public EV3LargeRegulatedMotor getRightMotor() {
         return rMotor;
     }
+
+
+	public void close() {
+		lMotor.close();
+		rMotor.close();
+		cSensorHandler.close();
+	}
 }

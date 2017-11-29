@@ -12,9 +12,10 @@ public class FollowLine extends ColorApplicationListener {
     private static final int SPEED = 75;
     private static final int MIN_SPEED_PERCENT = 90;
 
-    private final int followedColor;
     private final EV3LargeRegulatedMotor lMotor;
     private final EV3LargeRegulatedMotor rMotor;
+    private final int followedColor;
+
     private int minSpeed;
 
     public FollowLine(Engine engine, int followedColor) {
@@ -53,7 +54,6 @@ public class FollowLine extends ColorApplicationListener {
 
     @Override
     public void end() {
-    	super.end();
         lMotor.stop();
         rMotor.stop();
     }

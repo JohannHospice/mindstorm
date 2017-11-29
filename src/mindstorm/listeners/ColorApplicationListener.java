@@ -13,17 +13,11 @@ public abstract class ColorApplicationListener extends ApplicationListener{
 	@Override
 	public void act() {
         colorSensorHandler.processColor();
-        if (colorSensorHandler.hasNewColor()) {
+        if (colorSensorHandler.hasNewColor())
     		actColor(colorSensorHandler.getColor());
-        }
 	}
 	/**
 	 * appelé uniquement lors de la capture d'une nouvelle couleur
-	 * @param color
 	 */
 	abstract void actColor(int color);
-	
-	public void end() {
-		colorSensorHandler.getColorSensor().close();
-	}
 }

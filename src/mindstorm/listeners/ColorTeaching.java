@@ -44,4 +44,9 @@ public class ColorTeaching extends ColorApplicationListener {
         LCD.drawString("color: " + colors.get(color), 0, 0);
     }
 
+	@Override
+	public void end() {
+		System.out.println(colors);
+	}
+
 }

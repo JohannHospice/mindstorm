@@ -23,7 +23,7 @@ public abstract class Application {
     }
     */
 
-    public static void run(ApplicationListener applicationListener) {
+    private static void run(ApplicationListener applicationListener) {
         applicationListener.start();
         while (applicationListener.isRunning())
             applicationListener.act();
@@ -38,5 +38,7 @@ public abstract class Application {
         ColorTeaching colorTeaching = new ColorTeaching(engine);
 
         Application.run(colorTeaching);
+        
+        engine.close();
     }
 }
