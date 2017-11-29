@@ -1,12 +1,12 @@
 package mindstorm.listeners;
 
-import mindstorm.tools.EV3ColorSensorHandler;
+import mindstorm.tools.ColorSensorHandler;
 
 public abstract class ColorApplicationListener extends ApplicationListener{
 
-    private final EV3ColorSensorHandler colorSensorHandler;
+    private final ColorSensorHandler colorSensorHandler;
 
-    ColorApplicationListener(EV3ColorSensorHandler colorSensorHandler ){
+    ColorApplicationListener(ColorSensorHandler colorSensorHandler ){
         this.colorSensorHandler = colorSensorHandler ;
     }
 

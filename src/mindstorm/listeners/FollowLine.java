@@ -41,14 +41,7 @@ public class FollowLine extends ColorApplicationListener {
     }
 
     @Override
-    public void end() {
-    	super.end();
-        lMotor.stop();
-        rMotor.stop();
-    }
-
-	@Override
-	void actColor(int color) {
+    void actColor(int color) {
         if (color == followedColor) {
             lMotor.setSpeed(minSpeed);
             rMotor.setSpeed(SPEED);
@@ -56,5 +49,12 @@ public class FollowLine extends ColorApplicationListener {
             lMotor.setSpeed(SPEED);
             rMotor.setSpeed(minSpeed);
         }
-	}
+    }
+
+    @Override
+    public void end() {
+    	super.end();
+        lMotor.stop();
+        rMotor.stop();
+    }
 }

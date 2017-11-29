@@ -5,12 +5,12 @@ import lejos.hardware.sensor.EV3ColorSensor;
 /**
  * ensemble de fonction permettant de faciliter l'utilisation d'un capteur couleur 
  */
-public class EV3ColorSensorHandler {
+public class ColorSensorHandler {
     private int color;
     private boolean newColor;
     private final EV3ColorSensor cSensor; // capteur couleur
 
-    public EV3ColorSensorHandler(EV3ColorSensor cSensor) {
+    public ColorSensorHandler(EV3ColorSensor cSensor) {
         this.cSensor = cSensor;
     }
 

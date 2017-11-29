@@ -14,16 +14,16 @@ public class Engine {
 
     private final EV3LargeRegulatedMotor lMotor;
     private final EV3LargeRegulatedMotor rMotor;
-    private final EV3ColorSensorHandler cSensorHandler;
+    private final ColorSensorHandler cSensorHandler;
 
     public Engine(EV3 ev3) {
         lMotor = new EV3LargeRegulatedMotor(ev3.getPort(PORT_MOTOR_RIGHT));
         rMotor = new EV3LargeRegulatedMotor(ev3.getPort(PORT_MOTOR_LEFT));
-        cSensorHandler = new EV3ColorSensorHandler(new EV3ColorSensor(ev3.getPort(PORT_COLOR)));
+        cSensorHandler = new ColorSensorHandler(new EV3ColorSensor(ev3.getPort(PORT_COLOR)));
     }
 
 
-    public EV3ColorSensorHandler getColorSensorHandler() {
+    public ColorSensorHandler getColorSensorHandler() {
         return cSensorHandler;
     }
 

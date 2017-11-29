@@ -4,7 +4,6 @@ package mindstorm.listeners;
  * Ecouteur
  *
  * @see mindstorm.Application
- * @see mindstorm.Engine
  */
 public abstract class ApplicationListener {
 
