@@ -1,4 +1,4 @@
-package mindstorm;
+package mindstorm.tools;
 
 import lejos.hardware.ev3.EV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;

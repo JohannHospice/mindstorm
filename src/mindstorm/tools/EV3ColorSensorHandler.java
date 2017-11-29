@@ -1,7 +1,10 @@
-package mindstorm;
+package mindstorm.tools;
 
 import lejos.hardware.sensor.EV3ColorSensor;
 
+/**
+ * ensemble de fonction permettant de faciliter l'utilisation d'un capteur couleur 
+ */
 public class EV3ColorSensorHandler {
     private int color;
     private boolean newColor;
@@ -11,6 +14,9 @@ public class EV3ColorSensorHandler {
         this.cSensor = cSensor;
     }
 
+    /**
+     * Change la couleur actuel et indique si elle a été modifiée
+     */
     public void processColor() {
         int tmpColor = cSensor.getColorID();
         if (tmpColor != color) {

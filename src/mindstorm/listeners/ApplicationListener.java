@@ -1,7 +1,5 @@
 package mindstorm.listeners;
 
-import mindstorm.Engine;
-
 /**
  * Ecouteur
  *
