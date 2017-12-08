@@ -1,6 +1,6 @@
 package mindstorm.tools;
 
-import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.hardware.sensor.HiTechnicColorSensor;
 
 /**
  * ensemble de fonction permettant de faciliter l'utilisation d'un capteur couleur
@@ -8,9 +8,9 @@ import lejos.hardware.sensor.EV3ColorSensor;
 public class ColorSensorHandler {
     private int color;
     private boolean newColor;
-    private final EV3ColorSensor cSensor; // capteur couleur
+    private final HiTechnicColorSensor cSensor; // capteur couleur
 
-    public ColorSensorHandler(EV3ColorSensor cSensor) {
+    public ColorSensorHandler(HiTechnicColorSensor cSensor) {
         this.cSensor = cSensor;
     }
 
@@ -19,8 +19,9 @@ public class ColorSensorHandler {
      */
     public void processColor() {
         int tmpColor = cSensor.getColorID();
+        System.out.println(tmpColor);
         if (tmpColor != color) {
-            color = tmpColor;
+        	color = tmpColor;
             newColor = true;
         }
         newColor = false;
@@ -34,7 +35,7 @@ public class ColorSensorHandler {
         return color;
     }
 
-    public EV3ColorSensor getColorSensor() {
+    public HiTechnicColorSensor getColorSensor() {
         return cSensor;
     }
 

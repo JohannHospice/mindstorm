@@ -1,23 +1,21 @@
 package mindstorm.listeners;
 
-import mindstorm.tools.ColorSensorHandler;
+import lejos.hardware.sensor.HiTechnicColorSensor;
+import lejos.robotics.SampleProvider;
 
-public abstract class ColorApplicationListener extends ApplicationListener{
+public abstract class ColorApplicationListener extends ApplicationListenerAdapter {
 
-    private final ColorSensorHandler colorSensorHandler;
+    protected SampleProvider colorRGBSensor;
+    protected HiTechnicColorSensor colorSensor;
+    protected float[] sample;
+    protected int sampleSize;
 
-    ColorApplicationListener(ColorSensorHandler colorSensorHandler ){
-        this.colorSensorHandler = colorSensorHandler ;
+
+    ColorApplicationListener(HiTechnicColorSensor colorSensor) {
+        this.colorSensor = colorSensor;
+        this.colorRGBSensor = colorSensor.getRGBMode();
+        this.sampleSize = colorRGBSensor.sampleSize();
+        sample = new float[sampleSize];
     }
 
-	@Override
-	public void act() {
-        colorSensorHandler.processColor();
-        if (colorSensorHandler.hasNewColor())
-    		actColor(colorSensorHandler.getColor());
-	}
-	/**
-	 * appelé uniquement lors de la capture d'une nouvelle couleur
-	 */
-	abstract void actColor(int color);
 }

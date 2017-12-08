@@ -14,12 +14,12 @@ public class FollowLine extends ColorApplicationListener {
 
     private final EV3LargeRegulatedMotor lMotor;
     private final EV3LargeRegulatedMotor rMotor;
-    private final int followedColor;
+    private final float[][] followedColor;
 
     private int minSpeed;
 
-    public FollowLine(Engine engine, int followedColor) {
-    	super(engine.getColorSensorHandler());
+    public FollowLine(Engine engine, float[][] followedColor) {
+        super(engine.getColorSensor());
         this.followedColor = followedColor;
         lMotor = engine.getLeftMotor();
         rMotor = engine.getRightMotor();
@@ -42,7 +42,9 @@ public class FollowLine extends ColorApplicationListener {
     }
 
     @Override
-    void actColor(int color) {
+    public void act() {
+        colorRGBSensor.fetchSample(sample, 0);
+        /*
         if (color == followedColor) {
             lMotor.setSpeed(minSpeed);
             rMotor.setSpeed(SPEED);
@@ -50,11 +52,7 @@ public class FollowLine extends ColorApplicationListener {
             lMotor.setSpeed(SPEED);
             rMotor.setSpeed(minSpeed);
         }
+        */
     }
 
-    @Override
-    public void end() {
-        lMotor.stop();
-        rMotor.stop();
-    }
 }
