@@ -3,11 +3,9 @@ package mindstorm.listeners;
 import lejos.hardware.Button;
 import lejos.hardware.sensor.HiTechnicColorSensor;
 
-import java.util.Arrays;
-
 public class ColorTeaching extends ColorApplicationListener {
 
-    private float[][] maxColors, minColors;
+    private float[][] avgColors;
     private int colorSize = 3,
             currentColor = 0,
             capture = 0,
@@ -15,38 +13,27 @@ public class ColorTeaching extends ColorApplicationListener {
     private ColorTeachingMemento memento = new ColorTeachingMemento();
 
     public class ColorTeachingMemento {
-        private float[][] maxColors, minColors;
+        private float[][] avgColors;
         private int colorSize;
 
-        public ColorTeachingMemento(int colorSize, float[][] minColors, float[][] maxColors) {
+        public ColorTeachingMemento(int colorSize, float[][] avgColors) {
             this.colorSize = colorSize;
-            this.minColors = minColors;
-            this.maxColors = maxColors;
+            this.avgColors = avgColors;
         }
 
         public ColorTeachingMemento() {
         }
 
-        public float[][] getMaxColors() {
-            return maxColors;
-        }
-        public float[] getMaxColor(int i) {
-            return maxColors[i];
+        public float[][] getAvgColors() {
+            return avgColors;
         }
 
-        public void setMaxColors(float[][] maxColors) {
-            this.maxColors = maxColors;
+        public float[] getAvgColor(int i) {
+            return avgColors[i];
         }
 
-        public float[][] getMinColors() {
-            return minColors;
-        }
-        public float[] getMinColor(int i) {
-            return minColors[i];
-        }
-
-        public void setMinColors(float[][] minColors) {
-            this.minColors = minColors;
+        public void setAvgColors(float[][] avgColor) {
+            avgColors = avgColor;
         }
 
         public int getColorSize() {
@@ -58,7 +45,7 @@ public class ColorTeaching extends ColorApplicationListener {
         }
 
         public ColorTeachingMemento copy() {
-            return new ColorTeachingMemento(colorSize, minColors, maxColors);
+            return new ColorTeachingMemento(colorSize, avgColors);
         }
     }
 
@@ -71,8 +58,7 @@ public class ColorTeaching extends ColorApplicationListener {
         System.out.println("start: color teaching");
         System.out.println("colors:" + colorSize);
         System.out.println("samples:" + captureSize);
-        maxColors = new float[colorSize][sampleSize];
-        minColors = new float[colorSize][sampleSize];
+        avgColors = new float[colorSize][sampleSize];
         System.out.println("step:" + currentColor);
     }
 
@@ -86,13 +72,9 @@ public class ColorTeaching extends ColorApplicationListener {
         Button.waitForAnyPress();
         colorRGBSensor.fetchSample(sample, 0);
         System.out.println("new capture");
-        System.out.println(sample);
-        for (int i = 0; i < sample.length; i++) {
-            if (maxColors[currentColor][i] < sample[i])
-                maxColors[currentColor][i] = sample[i];
-            if (minColors[currentColor][i] > sample[i])
-                minColors[currentColor][i] = sample[i];
-        }
+        for (int i = 0; i < sample.length; i++)
+            avgColors[currentColor][i] += sample[i];
+
         if (capture < captureSize) {
             capture++;
         } else {
@@ -105,13 +87,17 @@ public class ColorTeaching extends ColorApplicationListener {
     @Override
     public void end() {
         super.end();
+        for (int i = 0; i < avgColors.length; i++) {
+            for (int j = 0; j < avgColors[i].length; j++) {
+                avgColors[i][j] /= colorSize;
+            }
+        }
         store();
     }
 
     public void store() {
         System.out.println("store colors");
-        memento.setMaxColors(maxColors);
-        memento.setMinColors(minColors);
+        memento.setAvgColors(avgColors);
         memento.setColorSize(colorSize);
     }
 

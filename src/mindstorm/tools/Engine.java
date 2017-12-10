@@ -10,7 +10,7 @@ import lejos.hardware.sensor.HiTechnicColorSensor;
 public class Engine {
     private final EV3LargeRegulatedMotor lMotor;
     private final EV3LargeRegulatedMotor rMotor;
-    private HiTechnicColorSensor colorSensor;
+    private final HiTechnicColorSensor colorSensor;
 
     public Engine(Port colorSensorPort, Port leftMotorPort, Port rightMotorPort) {
         lMotor = new EV3LargeRegulatedMotor(leftMotorPort);

@@ -8,6 +8,7 @@ import java.util.Arrays;
 public class ColorRecognizing extends ColorApplicationListener {
 
     private final ColorTeaching.ColorTeachingMemento colorTeachingMemento;
+    private int bound = 30;
 
     public ColorRecognizing(HiTechnicColorSensor colorSensor, ColorTeaching.ColorTeachingMemento colorTeachingMemento) {
         super(colorSensor);
@@ -19,9 +20,8 @@ public class ColorRecognizing extends ColorApplicationListener {
         super.start();
         System.out.println("start: color recognizing");
         for (int i = 0; i < colorTeachingMemento.getColorSize(); i++) {
-            System.out.println("color "+i);
-            System.out.println("min" + Arrays.toString(colorTeachingMemento.getMinColor(i)));
-            System.out.println("max" + Arrays.toString(colorTeachingMemento.getMaxColor(i)));
+            System.out.println("color " + i);
+            System.out.println("min" + Arrays.toString(colorTeachingMemento.getAvgColor(i)));
         }
     }
 
@@ -37,7 +37,7 @@ public class ColorRecognizing extends ColorApplicationListener {
         colorRGBSensor.fetchSample(sample, 0);
         int j = -1;
         for (int i = 0; i < sample.length; i++) {
-            if (isBounded(sample, colorTeachingMemento.getMinColor(i), colorTeachingMemento.getMaxColor(i))) {
+            if (isBounded(bound, colorTeachingMemento.getAvgColor(i), sample)) {
                 j = i;
             }
         }
@@ -47,11 +47,11 @@ public class ColorRecognizing extends ColorApplicationListener {
             System.out.println("unknown color");
     }
 
-    private boolean isBounded(float[] val, float[] min, float[] max) {
+    private boolean isBounded(int bound, float[] avg, float[] val) {
         boolean ok = true;
         int i = 0;
         while (ok && i < val.length) {
-            ok = min[i] < val[i] && val[i] < max[i];
+            ok = avg[i] - bound < val[i] && val[i] < avg[i] + bound;
             i++;
         }
         return ok;

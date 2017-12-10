@@ -44,7 +44,7 @@ public class FollowLine extends ColorApplicationListener {
     @Override
     public void act() {
         colorRGBSensor.fetchSample(sample, 0);
-        /*
+
         if (color == followedColor) {
             lMotor.setSpeed(minSpeed);
             rMotor.setSpeed(SPEED);
@@ -52,7 +52,6 @@ public class FollowLine extends ColorApplicationListener {
             lMotor.setSpeed(SPEED);
             rMotor.setSpeed(minSpeed);
         }
-        */
     }
 
 }
