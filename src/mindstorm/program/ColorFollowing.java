@@ -1,13 +1,14 @@
-package mindstorm.listeners;
+package mindstorm.program;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import mindstorm.listener.ColorApplicationListener;
 import mindstorm.tools.Engine;
 
 /**
  * Programme permettant de suivre une ligne de couleur
  * algorithme: rouler; si couleur detectée: reduire vitesse roue gauche sinon reduire
  */
-public class FollowLine extends ColorApplicationListener {
+public class ColorFollowing extends ColorApplicationListener {
 
     private static final int SPEED = 75;
     private static final int MIN_SPEED_PERCENT = 90;
@@ -17,13 +18,23 @@ public class FollowLine extends ColorApplicationListener {
     private final float[][] followedColor;
 
     private int minSpeed;
+    private float[][] color;
 
-    public FollowLine(Engine engine, float[][] followedColor) {
+    public ColorFollowing(Engine engine, float[][] followedColor) {
         super(engine.getColorSensor());
         this.followedColor = followedColor;
         lMotor = engine.getLeftMotor();
         rMotor = engine.getRightMotor();
     }
+
+    /*
+    public ColorFollowing(Engine engine, ColorTeaching.ColorTeachingMemento memento) {
+        super(engine.getColorSensor());
+        lMotor = engine.getLeftMotor();
+        rMotor = engine.getRightMotor();
+        colorBound = new ColorBounds(memento.getColorSamples());
+    }
+    */
 
     private static int percentTo(int a, int b) {
         return a * b / 100;

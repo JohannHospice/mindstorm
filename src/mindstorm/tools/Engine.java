@@ -26,13 +26,13 @@ public class Engine {
         return rMotor;
     }
 
+    public HiTechnicColorSensor getColorSensor() {
+        return colorSensor;
+    }
+
     public void close() {
         lMotor.close();
         rMotor.close();
         colorSensor.close();
-    }
-
-    public HiTechnicColorSensor getColorSensor() {
-        return colorSensor;
     }
 }

@@ -1,6 +1,6 @@
-package mindstorm.listeners;
+package mindstorm.listener;
 
-public abstract class ApplicationListenerAdapter extends ApplicationListener {
+public abstract class ApplicationListenerAdapter implements ApplicationListener {
     @Override
     public void start() {
     }

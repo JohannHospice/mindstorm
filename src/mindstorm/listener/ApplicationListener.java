@@ -1,31 +1,31 @@
-package mindstorm.listeners;
+package mindstorm.listener;
 
 /**
  * Ecouteur
  *
  * @see mindstorm.Application
  */
-public abstract class ApplicationListener {
+public interface ApplicationListener {
 
     /**
      * début du comportement. appelé lors du lancement du comptement
      */
-    public abstract void start();
+    void start();
 
     /**
      * actualisation du comportement. tourne en boucle tant que isRunning est vrai
      */
-    public abstract void act();
+    void act();
 
     /**
      * arret du comportement. appelé quand isRunning passe à faux
      */
-    public abstract void end();
+    void end();
 
     /**
      * fonction permettant l'arret du comportement
      *
      * @return boolean
      */
-    public abstract boolean isRunning();
+    boolean isRunning();
 }
