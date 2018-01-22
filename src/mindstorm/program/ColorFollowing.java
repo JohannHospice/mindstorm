@@ -2,7 +2,11 @@ package mindstorm.program;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import mindstorm.listener.ColorApplicationListener;
+import mindstorm.tools.ColorBounds;
+import mindstorm.tools.ColorSample;
 import mindstorm.tools.Engine;
+
+import java.util.ArrayList;
 
 /**
  * Programme permettant de suivre une ligne de couleur
@@ -13,28 +17,17 @@ public class ColorFollowing extends ColorApplicationListener {
     private static final int SPEED = 75;
     private static final int MIN_SPEED_PERCENT = 90;
 
-    private final EV3LargeRegulatedMotor lMotor;
-    private final EV3LargeRegulatedMotor rMotor;
-    private final float[][] followedColor;
+    private final EV3LargeRegulatedMotor lMotor, rMotor;
+    private final ColorBounds colorBounds;
 
     private int minSpeed;
-    private float[][] color;
 
-    public ColorFollowing(Engine engine, float[][] followedColor) {
-        super(engine.getColorSensor());
-        this.followedColor = followedColor;
-        lMotor = engine.getLeftMotor();
-        rMotor = engine.getRightMotor();
-    }
-
-    /*
-    public ColorFollowing(Engine engine, ColorTeaching.ColorTeachingMemento memento) {
+    public ColorFollowing(Engine engine, ArrayList<ColorSample> colorSamples) {
         super(engine.getColorSensor());
         lMotor = engine.getLeftMotor();
         rMotor = engine.getRightMotor();
-        colorBound = new ColorBounds(memento.getColorSamples());
+        colorBounds = new ColorBounds(colorSamples);
     }
-    */
 
     private static int percentTo(int a, int b) {
         return a * b / 100;
@@ -56,7 +49,7 @@ public class ColorFollowing extends ColorApplicationListener {
     public void act() {
         colorRGBSensor.fetchSample(sample, 0);
 
-        if (color == followedColor) {
+        if (colorBounds.getIndex(sample) == 0) {
             lMotor.setSpeed(minSpeed);
             rMotor.setSpeed(SPEED);
         } else {
