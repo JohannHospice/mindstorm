@@ -2,8 +2,8 @@ package mindstorm.program;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import mindstorm.listener.ColorApplicationListener;
-import mindstorm.tools.ColorBounds;
-import mindstorm.tools.ColorSample;
+import mindstorm.tools.Color;
+import mindstorm.tools.ColorList;
 import mindstorm.tools.Engine;
 
 import java.util.ArrayList;
@@ -14,19 +14,21 @@ import java.util.ArrayList;
  */
 public class ColorFollowing extends ColorApplicationListener {
 
-    private static final int SPEED = 75;
-    private static final int MIN_SPEED_PERCENT = 90;
+    private static final int SPEED = 200;
+    private static final int MIN_SPEED_PERCENT = 35;
 
     private final EV3LargeRegulatedMotor lMotor, rMotor;
-    private final ColorBounds colorBounds;
+    private final ColorList colorBounds = new ColorList();
 
     private int minSpeed;
 
-    public ColorFollowing(Engine engine, ArrayList<ColorSample> colorSamples) {
+    public ColorFollowing(Engine engine, ArrayList<ColorList> colorSamples) {
         super(engine.getColorSensor());
         lMotor = engine.getLeftMotor();
         rMotor = engine.getRightMotor();
-        colorBounds = new ColorBounds(colorSamples);
+
+        for (ColorList colorSample : colorSamples)
+            colorBounds.add(colorSample.getAverage());
     }
 
     private static int percentTo(int a, int b) {
@@ -35,21 +37,17 @@ public class ColorFollowing extends ColorApplicationListener {
 
     @Override
     public void start() {
+        System.out.println("start:colorFollowing");
         minSpeed = percentTo(SPEED, MIN_SPEED_PERCENT);
         lMotor.forward();
         rMotor.forward();
     }
 
     @Override
-    public boolean isRunning() {
-        return true;
-    }
-
-    @Override
     public void act() {
         colorRGBSensor.fetchSample(sample, 0);
 
-        if (colorBounds.getIndex(sample) == 0) {
+        if (colorBounds.getIndex(new Color(sample), .3f) == 0) {
             lMotor.setSpeed(minSpeed);
             rMotor.setSpeed(SPEED);
         } else {
@@ -58,4 +56,14 @@ public class ColorFollowing extends ColorApplicationListener {
         }
     }
 
+    @Override
+    public boolean isRunning() {
+        return true;
+    }
+
+    @Override
+    public void end() {
+        super.end();
+        System.out.println("end:colorFollowing");
+    }
 }

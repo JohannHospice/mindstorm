@@ -3,36 +3,37 @@ package mindstorm.program;
 import lejos.hardware.Button;
 import lejos.hardware.sensor.HiTechnicColorSensor;
 import mindstorm.listener.ColorApplicationListener;
-import mindstorm.tools.ColorBounds;
+import mindstorm.tools.Color;
+import mindstorm.tools.ColorList;
+
+import java.util.ArrayList;
 
 public class ColorRecognizing extends ColorApplicationListener {
 
-    private final ColorBounds colorBounds;
+    private final ColorList colorBounds = new ColorList();
 
-    public ColorRecognizing(HiTechnicColorSensor colorSensor, ColorTeaching.ColorTeachingMemento colorTeachingMemento) {
+    public ColorRecognizing(HiTechnicColorSensor colorSensor, ArrayList<ColorList> colorSamples) {
         super(colorSensor);
-        colorBounds = new ColorBounds(colorTeachingMemento.getColorSamples());
+        for (ColorList colorSample : colorSamples)
+            colorBounds.add(colorSample.getAverage());
     }
 
     @Override
     public void start() {
         super.start();
-        System.out.println("start: color recognizing");
+        System.out.println("start:colorRecognizing");
     }
 
     @Override
     public void act() {
-        System.out.println("waiting for capture");
+        System.out.println("capture...");
 
         Button.waitForAnyPress();
         colorRGBSensor.fetchSample(sample, 0);
 
-        int colorIndex = colorBounds.getIndex(sample);
+        int colorIndex = colorBounds.getIndex(new Color(sample), 30);
 
-        if (colorIndex > -1)
-            System.out.println("color " + colorIndex);
-        else
-            System.out.println("unknown color");
+        System.out.println("CO:" + colorIndex);
     }
 
     @Override
@@ -40,4 +41,9 @@ public class ColorRecognizing extends ColorApplicationListener {
         return true;
     }
 
+    @Override
+    public void end() {
+        super.end();
+        System.out.println("end:colorRecognizing");
+    }
 }

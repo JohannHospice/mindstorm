@@ -3,56 +3,53 @@ package mindstorm.program;
 import lejos.hardware.Button;
 import lejos.hardware.sensor.HiTechnicColorSensor;
 import mindstorm.listener.ColorApplicationListener;
-import mindstorm.tools.ColorSample;
+import mindstorm.tools.ColorList;
 
 import java.util.ArrayList;
 
 public class ColorTeaching extends ColorApplicationListener {
 
-    private ArrayList<ColorSample> colorSamples;
+    private final ArrayList<ColorList> colorSamples = new ArrayList<ColorList>();
+
+    private final int captureSize;
+
     private int colorIndex = 0,
             captureIndex = 0,
-            colorSize = 3,
-            captureSize = 3;
+            colorSize = 3;
 
-    public ColorTeaching(HiTechnicColorSensor colorSensor) {
+    public ColorTeaching(HiTechnicColorSensor colorSensor, int n) {
         super(colorSensor);
+        captureSize = n;
     }
 
     @Override
     public void start() {
-        colorSamples = new ArrayList<ColorSample>();
+        System.out.println("start:colorTeaching");
         for (int i = 0; i < captureSize; i++)
-            colorSamples.add(new ColorSample());
-
-        System.out.println("start: color teaching");
-        System.out.println("colors:" + colorSize);
-        System.out.println("samples:" + captureSize);
-        System.out.println("step:" + colorIndex);
+            colorSamples.add(new ColorList());
     }
 
     @Override
     public void act() {
+        System.out.println("CO:" + colorIndex + "; CA:" + captureIndex);
         Button.waitForAnyPress();
         colorRGBSensor.fetchSample(sample, 0);
 
-        System.out.println("new index captured" + captureIndex);
 
-        colorSamples.get(captureIndex).addColor(sample);
+        colorSamples.get(captureIndex).add(sample);
 
-        if (captureIndex < captureSize) {
+        if (captureIndex < captureSize - 1) {
             captureIndex++;
         } else {
             captureIndex = 0;
             colorIndex++;
-            System.out.println("step:" + colorIndex);
         }
     }
 
     @Override
     public void end() {
         super.end();
-        System.out.println("store colors");
+        System.out.println("end:colorTeaching");
     }
 
     @Override
@@ -60,23 +57,7 @@ public class ColorTeaching extends ColorApplicationListener {
         return colorIndex < colorSize;
     }
 
-    public ColorTeachingMemento getMemento() {
-        return new ColorTeachingMemento(colorSamples);
-    }
-
-    public class ColorTeachingMemento {
-        private ArrayList<ColorSample> colorSamples;
-
-        public ColorTeachingMemento(ArrayList<ColorSample> colorSamples) {
-            this.colorSamples = colorSamples;
-        }
-
-        public ArrayList<ColorSample> getColorSamples() {
-            return colorSamples;
-        }
-
-        public int getSampleSize() {
-            return colorSamples.size();
-        }
+    public ArrayList<ColorList> getColorSamples() {
+        return colorSamples;
     }
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/mindstorm.iml" filepath="$PROJECT_DIR$/mindstorm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/_mindstorm.iml" filepath="$PROJECT_DIR$/_mindstorm.iml" />
     </modules>
   </component>
 </project>

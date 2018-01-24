@@ -3,6 +3,7 @@ package mindstorm;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import mindstorm.listener.ApplicationListener;
+import mindstorm.program.ColorFollowing;
 import mindstorm.program.ColorRecognizing;
 import mindstorm.program.ColorTeaching;
 import mindstorm.tools.Engine;
@@ -22,30 +23,30 @@ public final class Application {
     }
 
     private static void colorTeaching(Engine engine) {
-        ColorTeaching colorTeaching = new ColorTeaching(engine.getColorSensor());
+        ColorTeaching colorTeaching = new ColorTeaching(engine.getColorSensor(), 3);
 
         Application.run(colorTeaching);
 
-        ColorRecognizing colorRecognizing = new ColorRecognizing(engine.getColorSensor(), colorTeaching.getMemento());
+        ColorRecognizing colorRecognizing = new ColorRecognizing(engine.getColorSensor(), colorTeaching.getColorSamples());
 
         Application.run(colorRecognizing);
     }
 
     private static void colorFollowing(Engine engine) {
-        ColorTeaching colorTeaching = new ColorTeaching(engine.getColorSensor());
+        ColorTeaching colorTeaching = new ColorTeaching(engine.getColorSensor(), 2);
 
         Application.run(colorTeaching);
 
-        /*
-        ColorFollowing colorFollowing = new ColorFollowing(engine, colorTeaching.getMemento());
+        ColorFollowing colorFollowing = new ColorFollowing(engine, colorTeaching.getColorSamples());
 
         Application.run(colorFollowing);
-        */
     }
 
     public static void main(String[] args) {
         Engine engine = new Engine(SensorPort.S1, MotorPort.A, MotorPort.B);
-        colorTeaching(engine);
+
+        colorFollowing(engine);
+
         engine.close();
     }
 }

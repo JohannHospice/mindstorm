@@ -1,7 +1,8 @@
 package mindstorm.tools;
 
 public class Color {
-    private float[] sample = new float[3];
+    public static int SAMPLE_LENGTH = 3;
+    private float[] sample = new float[SAMPLE_LENGTH];
 
     public Color(float r, float g, float b) {
         sample[0] = r;
@@ -11,6 +12,20 @@ public class Color {
 
     public Color(float[] sample) {
         System.arraycopy(sample, 0, this.sample, 0, this.sample.length);
+    }
+
+    public static float[] distance(Color c1, Color c2) {
+        float[] distance = new float[SAMPLE_LENGTH];
+        for (int i = 0; i < SAMPLE_LENGTH; i++)
+            distance[i] = Math.abs(c1.get(i) - c2.get(i));
+        return distance;
+    }
+
+    public static double deltaE(Color c1, Color c2) {
+        double sum = 0;
+        for (int i = 0; i < Color.SAMPLE_LENGTH; i++)
+            sum = Math.pow(c2.get(i) - c1.get(i), 2);
+        return Math.sqrt(sum);
     }
 
     public float getR() {
@@ -27,6 +42,10 @@ public class Color {
 
     public float[] getSample() {
         return sample;
+    }
+
+    public double deltaE(Color c) {
+        return Color.deltaE(this, c);
     }
 
     public boolean inferior(Color color) {
@@ -50,4 +69,9 @@ public class Color {
                 return false;
         return true;
     }
+
+    public float get(int i) {
+        return sample[i];
+    }
+
 }
