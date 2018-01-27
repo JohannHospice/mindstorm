@@ -7,15 +7,19 @@ import mindstorm.tools.ColorList;
 
 import java.util.ArrayList;
 
+
+/**
+ * Programme permettant l'apprentissage de couleur.
+ * Créé une liste de liste de couleur enregistré: x = couleures; y = captures
+ */
 public class ColorTeaching extends ColorApplicationListener {
 
+    private static final int SHOT_REPETITION = 10;
     private final int captureSize, colorSize;
-
     private ArrayList<ColorList> colorSamples = new ArrayList<ColorList>();
+    private int colorIndex = 0, captureIndex = 0;
 
     private boolean running = true;
-
-    private int colorIndex = 0, captureIndex = 0;
 
     public ColorTeaching(HiTechnicColorSensor colorSensor, int colorSize, int captureSize) {
         super(colorSensor);
@@ -37,12 +41,13 @@ public class ColorTeaching extends ColorApplicationListener {
         switch (Button.waitForAnyPress()) {
             case Button.ID_ENTER:
                 fetchSample();
-
                 colorSamples.get(captureIndex).add(getSample());
 
                 if (captureIndex < captureSize - 1) {
+                    // next capture of a color
                     captureIndex++;
                 } else {
+                    // next color
                     captureIndex = 0;
                     colorIndex++;
                 }
