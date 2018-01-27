@@ -24,8 +24,6 @@ public interface ApplicationListener {
 
     /**
      * fonction permettant l'arret du comportement
-     *
-     * @return boolean
      */
     boolean isRunning();
 }

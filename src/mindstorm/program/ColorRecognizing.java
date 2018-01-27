@@ -8,14 +8,18 @@ import mindstorm.tools.ColorList;
 
 import java.util.ArrayList;
 
+/**
+ * Programme permettant de enregistrer differentes captures de meme couleurs
+ */
 public class ColorRecognizing extends ColorApplicationListener {
 
-    private final ColorList colorBounds = new ColorList();
+    private final ColorList colorList = new ColorList();
+    private boolean running = true;
 
     public ColorRecognizing(HiTechnicColorSensor colorSensor, ArrayList<ColorList> colorSamples) {
         super(colorSensor);
         for (ColorList colorSample : colorSamples)
-            colorBounds.add(colorSample.getAverage());
+            colorList.add(colorSample.getAverage());
     }
 
     @Override
@@ -26,24 +30,27 @@ public class ColorRecognizing extends ColorApplicationListener {
 
     @Override
     public void act() {
-        System.out.println("capture...");
-
-        Button.waitForAnyPress();
-        colorRGBSensor.fetchSample(sample, 0);
-
-        int colorIndex = colorBounds.getIndex(new Color(sample), 30);
-
-        System.out.println("CO:" + colorIndex);
+        switch (Button.waitForAnyPress()) {
+            case Button.ID_ESCAPE:
+                running = false;
+                break;
+            case Button.ID_ENTER:
+                fetchSample();
+                int colorIndex = colorList.getIndex(new Color(getSample()), .1f);
+                System.out.println("CO:" + colorIndex);
+                break;
+        }
     }
 
-    @Override
-    public boolean isRunning() {
-        return true;
-    }
 
     @Override
     public void end() {
         super.end();
         System.out.println("end:colorRecognizing");
+    }
+
+    @Override
+    public boolean isRunning() {
+        return running;
     }
 }

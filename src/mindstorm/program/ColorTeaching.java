@@ -9,17 +9,18 @@ import java.util.ArrayList;
 
 public class ColorTeaching extends ColorApplicationListener {
 
-    private final ArrayList<ColorList> colorSamples = new ArrayList<ColorList>();
+    private final int captureSize, colorSize;
 
-    private final int captureSize;
+    private ArrayList<ColorList> colorSamples = new ArrayList<ColorList>();
 
-    private int colorIndex = 0,
-            captureIndex = 0,
-            colorSize = 3;
+    private boolean running = true;
 
-    public ColorTeaching(HiTechnicColorSensor colorSensor, int n) {
+    private int colorIndex = 0, captureIndex = 0;
+
+    public ColorTeaching(HiTechnicColorSensor colorSensor, int colorSize, int captureSize) {
         super(colorSensor);
-        captureSize = n;
+        this.captureSize = captureSize;
+        this.colorSize = colorSize;
     }
 
     @Override
@@ -32,19 +33,27 @@ public class ColorTeaching extends ColorApplicationListener {
     @Override
     public void act() {
         System.out.println("CO:" + colorIndex + "; CA:" + captureIndex);
-        Button.waitForAnyPress();
-        colorRGBSensor.fetchSample(sample, 0);
 
+        switch (Button.waitForAnyPress()) {
+            case Button.ID_ENTER:
+                fetchSample();
 
-        colorSamples.get(captureIndex).add(sample);
+                colorSamples.get(captureIndex).add(getSample());
 
-        if (captureIndex < captureSize - 1) {
-            captureIndex++;
-        } else {
-            captureIndex = 0;
-            colorIndex++;
+                if (captureIndex < captureSize - 1) {
+                    captureIndex++;
+                } else {
+                    captureIndex = 0;
+                    colorIndex++;
+                }
+                break;
+            case Button.ID_ESCAPE:
+                colorSamples = null;
+                running = false;
+                break;
         }
     }
+
 
     @Override
     public void end() {
@@ -54,7 +63,7 @@ public class ColorTeaching extends ColorApplicationListener {
 
     @Override
     public boolean isRunning() {
-        return colorIndex < colorSize;
+        return running && colorIndex < colorSize;
     }
 
     public ArrayList<ColorList> getColorSamples() {
