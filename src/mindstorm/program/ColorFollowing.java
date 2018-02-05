@@ -22,6 +22,8 @@ public class ColorFollowing extends ColorApplicationListener {
     private final ColorList colorList = new ColorList();
 
     private boolean running = true;
+    
+    private int iterCounter = 0;
 
     private int speed = SPEED,
             speedPercent = MIN_SPEED_PERCENT,
@@ -80,12 +82,28 @@ public class ColorFollowing extends ColorApplicationListener {
     private void actBehavior() {
         fetchSample();
         int id = colorList.getIndex(new Color(getSample()), .3f);
-        if (id == 0) {
+        /*if (id == 0) {
             lMotor.setSpeed(minSpeed);
             rMotor.setSpeed(SPEED);
         } else if (id == 1) {
             lMotor.setSpeed(SPEED);
             rMotor.setSpeed(minSpeed);
+        }*/
+        if (id == 0) {
+            lMotor.forward();
+            rMotor.forward();
+            iterCounter = 0;
+        } else if (id == 1) {
+            if (iterCounter < 10) {
+            	lMotor.setSpeed(SPEED);
+            	rMotor.setSpeed(minSpeed);
+            	iterCounter++;
+            }
+            else {
+            	lMotor.setSpeed(minSpeed);
+            	rMotor.setSpeed(SPEED); 
+            	iterCounter++;           	
+            }
         }
     }
 
