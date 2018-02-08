@@ -22,12 +22,14 @@ public class ColorFollowing extends ColorApplicationListener {
     private final ColorList colorList = new ColorList();
 
     private boolean running = true;
-    
-    private int iterCounter = 0;
 
     private int speed = SPEED,
             speedPercent = MIN_SPEED_PERCENT,
             minSpeed = percentTo(SPEED, MIN_SPEED_PERCENT);
+
+    private float tolerance = .25f;
+    private int lastColorId = -1;
+    private int sameColorCounter = 0;
 
     public ColorFollowing(Engine engine, ArrayList<ColorList> colorSamples) {
         this(engine);
@@ -57,6 +59,47 @@ public class ColorFollowing extends ColorApplicationListener {
         handleInput(Button.readButtons());
     }
 
+    @Override
+    public void end() {
+        super.end();
+        System.out.println("end:colorFollowing");
+    }
+
+    @Override
+    public boolean isRunning() {
+        return running;
+    }
+
+    private void actBehavior() {
+        fetchSample();
+        int id = colorList.getIndex(new Color(getSample()), tolerance);
+
+        int right, left;
+        if (id == 0) {
+            right = minSpeed;
+            left = speed;
+        } else if (id == 1) {
+            right = speed;
+            left = minSpeed;
+        } else {
+            right = speed;
+            left = speed;
+        }
+
+        setSpeed(left, right);
+/*
+        if (lastColorId == id) {
+            sameColorCounter++;
+        } else {
+            sameColorCounter--;
+        }
+
+        speed = percentTo(speed, Math.abs(sameColorCounter) / 100);
+        minSpeed = percentTo(speed, speedPercent);
+*/
+        lastColorId = id;
+    }
+
     private void handleInput(int id) {
         if (id == Button.ID_ESCAPE)
             running = false;
@@ -79,52 +122,18 @@ public class ColorFollowing extends ColorApplicationListener {
         }
     }
 
-    private void actBehavior() {
-        fetchSample();
-        int id = colorList.getIndex(new Color(getSample()), .3f);
-        /*if (id == 0) {
-            lMotor.setSpeed(minSpeed);
-            rMotor.setSpeed(SPEED);
-        } else if (id == 1) {
-            lMotor.setSpeed(SPEED);
-            rMotor.setSpeed(minSpeed);
-        }*/
-        if (id == 0) {
-            lMotor.forward();
-            rMotor.forward();
-            iterCounter = 0;
-        } else if (id == 1) {
-            if (iterCounter < 10) {
-            	lMotor.setSpeed(SPEED);
-            	rMotor.setSpeed(minSpeed);
-            	iterCounter++;
-            }
-            else {
-            	lMotor.setSpeed(minSpeed);
-            	rMotor.setSpeed(SPEED); 
-            	iterCounter++;           	
-            }
-        }
-    }
-
-    @Override
-    public void end() {
-        super.end();
-        System.out.println("end:colorFollowing");
-    }
-
-    @Override
-    public boolean isRunning() {
-        return running;
-    }
-
-    public void setColorSample(ArrayList<ColorList> colorSamples) {
-        for (ColorList colorSample : colorSamples)
-            colorList.add(colorSample.getAverage());
+    private void setSpeed(int left, int right) {
+        lMotor.setSpeed(left);
+        rMotor.setSpeed(right);
     }
 
     private void updateRotationSpeed() {
         minSpeed = percentTo(speed, speedPercent);
         System.out.println("S:" + speed + "; A:" + speedPercent);
+    }
+
+    public void setColorSample(ArrayList<ColorList> colorSamples) {
+        for (ColorList colorSample : colorSamples)
+            colorList.add(colorSample.getAverage());
     }
 }
