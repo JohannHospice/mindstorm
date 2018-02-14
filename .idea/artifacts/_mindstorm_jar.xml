@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/_mindstorm_jar</output-path>
     <root id="archive" name="mindstorm.jar">
       <element id="module-output" name="_mindstorm" />
-      <element id="extracted-dir" path="$USER_HOME$/Applications/leJOS_EV3_0.9.1-beta/lib/ev3/ev3classes.jar" path-in-jar="/" />
+      <element id="library" level="project" name="ev3classes" />
     </root>
   </artifact>
 </component>
