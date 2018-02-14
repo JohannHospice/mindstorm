@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 /**
  * Programme permettant de suivre une ligne de couleur
- * algorithme: rouler; si couleur detectée: reduire vitesse roue gauche sinon reduire
  */
 public abstract class ColorFollowing extends ColorApplicationListener {
     private final EV3LargeRegulatedMotor lMotor, rMotor;

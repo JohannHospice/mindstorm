@@ -6,6 +6,12 @@ import mindstorm.tools.Engine;
 
 import java.util.ArrayList;
 
+/**
+ * algorithme:
+ * si sur la ligne alors tout droit
+ * sinon si à gauche de la ligne alors tourner à droite
+ * sinon si à droite de la ligne alors tourner à gauche
+ */
 public class ColorFollowingV2 extends ColorFollowing {
     private enum Side {
         LEFT, RIGHT
@@ -40,7 +46,7 @@ public class ColorFollowingV2 extends ColorFollowing {
     protected void actBehavior(int colorId) {
         switch (colorId) {
             case 0:
-                goStraight();
+                goForward();
                 onLine = true;
                 break;
             case 1:
@@ -68,7 +74,7 @@ public class ColorFollowingV2 extends ColorFollowing {
         setSpeed(speed, 0);
     }
 
-    private void goStraight() {
+    private void goForward() {
         setSpeed(speed, speed);
     }
 }

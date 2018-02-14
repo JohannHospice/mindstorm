@@ -7,8 +7,9 @@ import mindstorm.tools.Engine;
 import java.util.ArrayList;
 
 /**
- * Programme permettant de suivre une ligne de couleur
- * algorithme: rouler; si couleur detectée: reduire vitesse roue gauche sinon reduire
+ * algorithme:
+ * si à gauche de la ligne alors tourner à droite
+ * sinon si à droite de la ligne alors tourner à gauche
  */
 public class ColorFollowingV1 extends ColorFollowing {
 
