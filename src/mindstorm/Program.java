@@ -1,7 +1,7 @@
 package mindstorm;
 
 import mindstorm.listener.ApplicationListener;
-import mindstorm.program.ColorFollowing;
+import mindstorm.program.ColorFollowingV2;
 import mindstorm.program.ColorRecognizing;
 import mindstorm.program.ColorTeaching;
 import mindstorm.tools.ColorList;
@@ -36,7 +36,7 @@ public class Program {
         ArrayList<ColorList> sample = colorTeaching.getColorSamples();
 
         if (sample != null)
-            run(new ColorFollowing(engine, sample));
+            run(new ColorFollowingV2(engine, sample));
     }
 
 }
