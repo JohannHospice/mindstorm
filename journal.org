@@ -40,3 +40,8 @@
    - Algo de suivi de ligne
 ** À faire:
    - Écrire un algorithme plus efficace
+
+* <16-02-2018>
+** À faire:
+  - Essayer de soit diminuer l'angle pour trouver la ligne pour que le robot ne
+    fasse pas le zig-zag
