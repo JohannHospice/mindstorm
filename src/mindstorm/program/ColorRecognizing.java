@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * Programme permettant de enregistrer differentes captures de meme couleurs
  */
 public class ColorRecognizing extends ColorApplicationListener {
+    private static final int SHOT_REPETITION = 5;
 
     private final ColorList colorList = new ColorList();
     private boolean running = true;
@@ -36,7 +37,15 @@ public class ColorRecognizing extends ColorApplicationListener {
                 break;
             case Button.ID_ENTER:
                 fetchSample();
-                int colorIndex = colorList.getIndex(new Color(getSample()), .1f);
+
+                // takes multiple capture
+                ColorList list = new ColorList();
+                for (int i = 0; i < SHOT_REPETITION; i++) {
+                    fetchSample();
+                    list.add(getSample());
+                }
+
+                int colorIndex = colorList.getIndex(new Color(list.getAverage().getSample()), .1f);
                 System.out.println("CO:" + colorIndex);
                 break;
         }

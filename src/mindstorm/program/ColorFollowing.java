@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Programme permettant de suivre une ligne de couleur
  */
 public abstract class ColorFollowing extends ColorApplicationListener {
-    private final EV3LargeRegulatedMotor lMotor, rMotor;
+    protected final EV3LargeRegulatedMotor lMotor, rMotor;
     private final ColorList colorList = new ColorList();
     private boolean running = true;
 
@@ -42,6 +42,8 @@ public abstract class ColorFollowing extends ColorApplicationListener {
 
     @Override
     public void end() {
+        lMotor.stop();
+        rMotor.stop();
         System.out.println("end:colorFollowing");
     }
 
@@ -50,7 +52,14 @@ public abstract class ColorFollowing extends ColorApplicationListener {
         return running;
     }
 
+    protected void stop() {
+        running = false;
+    }
+
     protected void setSpeed(int left, int right) {
+        lMotor.forward();
+        rMotor.forward();
+
         lMotor.setSpeed(left);
         rMotor.setSpeed(right);
     }
@@ -58,8 +67,4 @@ public abstract class ColorFollowing extends ColorApplicationListener {
     protected abstract void handleInput(int buttonId);
 
     protected abstract void actBehavior(int colorId);
-
-    protected void stop() {
-        running = false;
-    }
 }

@@ -13,13 +13,8 @@ import java.util.ArrayList;
  * sinon si à droite de la ligne alors tourner à gauche
  */
 public class ColorFollowingV2 extends ColorFollowing {
-    private enum Side {
-        LEFT, RIGHT
-    }
-
     private Side oldSide = Side.LEFT;
     private boolean onLine = false;
-
     private int speed = 500;
 
     public ColorFollowingV2(Engine engine, ArrayList<ColorList> colorSamples) {
@@ -34,12 +29,13 @@ public class ColorFollowingV2 extends ColorFollowing {
                 break;
             case Button.ID_UP:
                 speed += 2;
+                System.out.println("S:" + speed);
                 break;
             case Button.ID_DOWN:
                 speed -= 2;
+                System.out.println("S:" + speed);
                 break;
         }
-        System.out.println("S:" + speed);
     }
 
     @Override
@@ -76,5 +72,9 @@ public class ColorFollowingV2 extends ColorFollowing {
 
     private void goForward() {
         setSpeed(speed, speed);
+    }
+
+    private enum Side {
+        LEFT, RIGHT
     }
 }

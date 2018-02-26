@@ -14,7 +14,6 @@ import java.util.ArrayList;
  */
 public class ColorTeaching extends ColorApplicationListener {
 
-    private static final int SHOOTING_REPETITION = 10;
     private final int captureSize, colorSize;
     private ArrayList<ColorList> colorSamples = new ArrayList<ColorList>();
     private int colorIndex = 0, captureIndex = 0;
@@ -30,7 +29,7 @@ public class ColorTeaching extends ColorApplicationListener {
     @Override
     public void start() {
         System.out.println("start:colorTeaching");
-        for (int i = 0; i < captureSize; i++)
+        for (int i = 0; i < colorSize; i++)
             colorSamples.add(new ColorList());
     }
 
@@ -42,11 +41,7 @@ public class ColorTeaching extends ColorApplicationListener {
             case Button.ID_ENTER:
                 fetchSample();
 
-                ColorList shootings = new ColorList();
-                for (int i = 0; i < SHOOTING_REPETITION; i++)
-                    shootings.add(getSample());
-
-                colorSamples.get(captureIndex).add(shootings.getAverage());
+                colorSamples.get(colorIndex).add(getSample());
 
                 if (captureIndex < captureSize - 1) {
                     // next capture of a color
