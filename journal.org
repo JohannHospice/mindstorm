@@ -45,3 +45,10 @@
 ** À faire:
   - Essayer de soit diminuer l'angle pour trouver la ligne pour que le robot ne
     fasse pas le zig-zag
+   
+
+* <02-03-2018>
+** Fait:
+   - un robot qui cherche la ligne seulement soit à driote soit à gauche
+** À faire: 
+   - permettre au robot de zigzaguer pour chercher la ligne
