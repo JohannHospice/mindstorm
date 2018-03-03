@@ -14,21 +14,13 @@ import java.util.ArrayList;
  * sinon si à droite de la ligne alors tourner à gauche
  */
 public class ColorFollowingV2 extends ColorFollowingListener {
-
     private static final int SEARCH_TIME = 1000;
 
-    private enum Side {
-        LEFT, RIGHT
-    }
-
-    private Side oldSide = Side.LEFT;
-
-    private boolean onLine = false;
-    private int speed = 500;
+    private boolean onLeftSide = true, onLine = false;
     private int counter = 0;
 
     public ColorFollowingV2(Engine engine, ArrayList<ColorList> colorSamples) {
-        super(engine, colorSamples);
+        super(engine, colorSamples, 0, 500);
     }
 
     @Override
@@ -38,12 +30,12 @@ public class ColorFollowingV2 extends ColorFollowingListener {
                 stop();
                 break;
             case Button.ID_UP:
-                speed += 2;
-                System.out.println("S:" + speed);
+                incMaxSpeed(2);
+                System.out.println("S:" + getMaxSpeed());
                 break;
             case Button.ID_DOWN:
-                speed -= 2;
-                System.out.println("S:" + speed);
+                incMaxSpeed(-2);
+                System.out.println("S:" + getMaxSpeed());
                 break;
         }
     }
@@ -57,39 +49,20 @@ public class ColorFollowingV2 extends ColorFollowingListener {
                 counter = 0;
                 break;
             case 1:
-                if (oldSide == Side.LEFT)
+                if (onLeftSide)
                     goRight();
-                else if (oldSide == Side.RIGHT)
+                else
                     goLeft();
 
                 if (onLine) {
-                    if (oldSide == Side.LEFT)
-                        oldSide = Side.RIGHT;
-                    else if (oldSide == Side.RIGHT)
-                        oldSide = Side.LEFT;
+                    onLeftSide = !onLeftSide;
                     onLine = false;
                 }
 
-                if(counter >= SEARCH_TIME){
-                    if (oldSide == Side.LEFT)
-                        oldSide = Side.RIGHT;
-                    else if (oldSide == Side.RIGHT)
-                        oldSide = Side.LEFT;
-                }
+                if (counter >= SEARCH_TIME)
+                    onLeftSide = !onLeftSide;
                 counter++;
                 break;
         }
-    }
-
-    private void goLeft() {
-        setSpeed(0, speed);
-    }
-
-    private void goRight() {
-        setSpeed(speed, 0);
-    }
-
-    private void goForward() {
-        setSpeed(speed, speed);
     }
 }
