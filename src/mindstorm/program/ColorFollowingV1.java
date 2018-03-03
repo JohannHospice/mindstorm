@@ -1,6 +1,7 @@
 package mindstorm.program;
 
 import lejos.hardware.Button;
+import mindstorm.listener.ColorFollowingListener;
 import mindstorm.tools.ColorList;
 import mindstorm.tools.Engine;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * si à gauche de la ligne alors tourner à droite
  * sinon si à droite de la ligne alors tourner à gauche
  */
-public class ColorFollowingV1 extends ColorFollowing {
+public class ColorFollowingV1 extends ColorFollowingListener {
 
     private static final int SPEED = 200;
     private static final int MIN_SPEED_PERCENT = 35;
@@ -55,6 +56,8 @@ public class ColorFollowingV1 extends ColorFollowing {
             setSpeed(minSpeed, SPEED);
         else if (colorId == 1)
             setSpeed(SPEED, minSpeed);
+        else
+            setSpeed(SPEED, SPEED);
     }
 
     private void updateRotationSpeed() {

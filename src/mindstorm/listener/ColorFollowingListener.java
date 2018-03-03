@@ -1,4 +1,4 @@
-package mindstorm.program;
+package mindstorm.listener;
 
 import lejos.hardware.Button;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -11,12 +11,12 @@ import java.util.ArrayList;
 /**
  * Programme permettant de suivre une ligne de couleur
  */
-public abstract class ColorFollowing extends ColorApplicationListener {
+public abstract class ColorFollowingListener extends ColorApplicationListener {
     protected final EV3LargeRegulatedMotor lMotor, rMotor;
     private final ColorList colorList = new ColorList();
     private boolean running = true;
 
-    public ColorFollowing(Engine engine, ArrayList<ColorList> colorSamples) {
+    public ColorFollowingListener(Engine engine, ArrayList<ColorList> colorSamples) {
         super(engine.getColorSensor());
         lMotor = engine.getLeftMotor();
         rMotor = engine.getRightMotor();
