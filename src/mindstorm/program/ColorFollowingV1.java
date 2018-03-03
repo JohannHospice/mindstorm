@@ -56,8 +56,6 @@ public class ColorFollowingV1 extends ColorFollowingListener {
             setSpeed(minSpeed, SPEED);
         else if (colorId == 1)
             setSpeed(SPEED, minSpeed);
-        else
-            setSpeed(SPEED, SPEED);
     }
 
     private void updateRotationSpeed() {
