@@ -11,7 +11,8 @@ import java.util.ArrayList;
  * Programme permettant de suivre une ligne de couleur
  */
 public abstract class ColorFollowingListener extends ColorApplicationListener {
-    private final EV3LargeRegulatedMotor lMotor, rMotor;
+    private final EV3LargeRegulatedMotor lMotor;
+	private final EV3LargeRegulatedMotor rMotor;
     private final ColorList colorList = new ColorList();
 
     private boolean running = true;
@@ -42,8 +43,8 @@ public abstract class ColorFollowingListener extends ColorApplicationListener {
     public void act() {
         fetchSample();
         int id = colorList.getIndex(new mindstorm.tools.Color(getSample()), .3f);
-
-        actBehavior(id);
+        int actualColor = 0;
+        actBehavior(id, actualColor);
         handleInput(Button.readButtons());
     }
 
@@ -65,7 +66,7 @@ public abstract class ColorFollowingListener extends ColorApplicationListener {
 
     protected abstract void handleInput(int buttonId);
 
-    protected abstract void actBehavior(int colorId);
+    protected abstract void actBehavior(int colorId, int actualColor);
 
     protected void setSpeed(int left, int right) {
         lMotor.forward();

@@ -35,7 +35,7 @@ public class ColorFollowingV1 extends ColorFollowingListener {
 
 
     @Override
-    protected void actBehavior(int colorId) {
+    protected void actBehavior(int colorId, int a) {
         switch (colorId) {
             case 0:
                 goLeft();
