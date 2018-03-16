@@ -18,6 +18,10 @@ public class ColorFollowingV1 extends ColorFollowingListener {
         super(engine, colorSamples, 200, percentTo(200, 35));
     }
 
+    private static int percentTo(int a, int b) {
+        return a * b / 100;
+    }
+
     @Override
     protected void handleInput(int buttonId) {
         switch (buttonId) {
@@ -33,7 +37,6 @@ public class ColorFollowingV1 extends ColorFollowingListener {
         }
     }
 
-
     @Override
     protected void actBehavior(int colorId) {
         switch (colorId) {
@@ -44,9 +47,5 @@ public class ColorFollowingV1 extends ColorFollowingListener {
                 goRight();
                 break;
         }
-    }
-
-    private static int percentTo(int a, int b) {
-        return a * b / 100;
     }
 }
