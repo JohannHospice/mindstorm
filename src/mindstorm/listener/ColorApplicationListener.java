@@ -3,7 +3,7 @@ package mindstorm.listener;
 import lejos.hardware.sensor.HiTechnicColorSensor;
 import lejos.robotics.SampleProvider;
 
-public abstract class ColorApplicationListener extends ApplicationListenerAdapter {
+public abstract class ColorApplicationListener implements ApplicationListener {
     private SampleProvider colorRGBSensor;
     private float[] sample;
 
