@@ -2,6 +2,7 @@ package mindstorm.listener;
 
 import lejos.hardware.Button;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import mindstorm.tools.Color;
 import mindstorm.tools.ColorList;
 import mindstorm.tools.Engine;
 
@@ -41,7 +42,7 @@ public abstract class ColorFollowingListener extends ColorApplicationListener {
     @Override
     public void act() {
         fetchSample();
-        int id = colorList.getIndex(new mindstorm.tools.Color(getSample()), .3f);
+        int id = colorList.getIndex(new Color(getSample()), .3f);
 
         actBehavior(id);
         handleInput(Button.readButtons());
@@ -83,7 +84,7 @@ public abstract class ColorFollowingListener extends ColorApplicationListener {
         setSpeed(maxSpeed, minSpeed);
     }
 
-    protected void goForward() {
+    protected void goStraight() {
         setSpeed(maxSpeed, maxSpeed);
     }
 
@@ -95,8 +96,16 @@ public abstract class ColorFollowingListener extends ColorApplicationListener {
         return maxSpeed;
     }
 
+    public void setMaxSpeed(int maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
     public int getMinSpeed() {
         return minSpeed;
+    }
+
+    public void setMinSpeed(int minSpeed) {
+        this.minSpeed = minSpeed;
     }
 
     public void incMaxSpeed(int speed) {
@@ -105,13 +114,5 @@ public abstract class ColorFollowingListener extends ColorApplicationListener {
 
     public void incMinSpeed(int speed) {
         minSpeed += speed;
-    }
-
-    public void setMaxSpeed(int maxSpeed) {
-        this.maxSpeed = maxSpeed;
-    }
-
-    public void setMinSpeed(int minSpeed) {
-        this.minSpeed = minSpeed;
     }
 }

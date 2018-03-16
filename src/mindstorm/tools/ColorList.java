@@ -32,4 +32,8 @@ public class ColorList extends ArrayList<Color> {
         }
         return minDistance <= tolerance ? minIndex : -1;
     }
+
+    public int getDistance(Color color) {
+        return -1;
+    }
 }

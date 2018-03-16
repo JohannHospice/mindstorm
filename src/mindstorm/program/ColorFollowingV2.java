@@ -44,7 +44,7 @@ public class ColorFollowingV2 extends ColorFollowingListener {
     protected void actBehavior(int colorId) {
         switch (colorId) {
             case 0:
-                goForward();
+                goStraight();
                 onLine = true;
                 counter = 0;
                 break;
