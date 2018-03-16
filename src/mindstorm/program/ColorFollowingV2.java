@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class ColorFollowingV2 extends ColorFollowingListener {
     private static final int SEARCH_TIME = 1000;
 
-    private boolean onLeftSide = true, onLine = false;
+    private boolean onLeftSide = true, onLine = false, directionChangedOnce = false;
     private int counter = 0;
 
     public ColorFollowingV2(Engine engine, ArrayList<ColorList> colorSamples) {
@@ -46,6 +46,7 @@ public class ColorFollowingV2 extends ColorFollowingListener {
             case 0:
                 goStraight();
                 onLine = true;
+                directionChangedOnce = false;
                 counter = 0;
                 break;
             case 1:
@@ -59,8 +60,10 @@ public class ColorFollowingV2 extends ColorFollowingListener {
                     onLine = false;
                 }
 
-                if (counter >= SEARCH_TIME)
+                if (!directionChangedOnce && counter >= SEARCH_TIME) {
                     onLeftSide = !onLeftSide;
+                    directionChangedOnce = true;
+                }
                 counter++;
                 break;
         }
