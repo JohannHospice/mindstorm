@@ -20,20 +20,17 @@ public class ColorList extends ArrayList<Color> {
         return new Color(sample);
     }
 
-    public int getIndex(Color color, double tolerance) {
+    public int getIndex(Color color, double tolerateDistance) {
         double minDistance = Double.POSITIVE_INFINITY;
         int minIndex = -1;
         for (int i = 0; i < size(); i++) {
             double distance = get(i).deltaE(color);
-            if (minDistance > distance) {
+            if (minDistance > distance && minDistance <= tolerateDistance) {
                 minDistance = distance;
                 minIndex = i;
             }
         }
-        return minDistance <= tolerance ? minIndex : -1;
+        return minIndex;
     }
 
-    public int getDistance(Color color) {
-        return -1;
-    }
 }
