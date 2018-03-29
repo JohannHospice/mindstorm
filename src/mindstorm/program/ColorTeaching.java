@@ -62,7 +62,6 @@ public class ColorTeaching extends ColorApplicationListener {
 
     @Override
     public void end() {
-        super.end();
         System.out.println("end:colorTeaching");
     }
 

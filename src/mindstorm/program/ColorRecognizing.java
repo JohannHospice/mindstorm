@@ -25,7 +25,6 @@ public class ColorRecognizing extends ColorApplicationListener {
 
     @Override
     public void start() {
-        super.start();
         System.out.println("start:colorRecognizing");
     }
 
@@ -54,7 +53,6 @@ public class ColorRecognizing extends ColorApplicationListener {
 
     @Override
     public void end() {
-        super.end();
         System.out.println("end:colorRecognizing");
     }
 
