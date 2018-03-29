@@ -15,12 +15,13 @@ import java.util.ArrayList;
  * sinon si à droite de la ligne alors tourner à gauche
  */
 public class ColorFollowingV3 extends ColorApplicationListener {
+    private static final float CONTROL_STEP = 10;
+
     private final EV3LargeRegulatedMotor lMotor, rMotor;
     private final ColorList colorList = new ColorList();
 
     private boolean running = true;
-
-    private float kp = 100, speed = 500;
+    private float kp = 1250, speed = 200;
     private double mid;
 
     public ColorFollowingV3(Engine engine, ArrayList<ColorList> colorSamples) {
@@ -44,8 +45,27 @@ public class ColorFollowingV3 extends ColorApplicationListener {
 
     @Override
     public void act() {
-        if (Button.readButtons() == Button.ID_ESCAPE)
-            running = false;
+        switch (Button.readButtons()) {
+            case Button.ID_ESCAPE:
+                running = false;
+                break;
+            case Button.ID_UP:
+                kp += CONTROL_STEP;
+                System.out.println("kp: " + kp);
+                break;
+            case Button.ID_DOWN:
+                kp -= CONTROL_STEP;
+                System.out.println("kp: " + kp);
+                break;
+            case Button.ID_LEFT:
+                speed -= CONTROL_STEP;
+                System.out.println("speed: " + speed);
+                break;
+            case Button.ID_RIGHT:
+                speed += CONTROL_STEP;
+                System.out.println("speed: " + speed);
+                break;
+        }
 
         fetchSample();
 
@@ -55,7 +75,6 @@ public class ColorFollowingV3 extends ColorApplicationListener {
 
         lMotor.setSpeed(speed + turn);
         rMotor.setSpeed(speed - turn);
-        System.out.println("M:" + mid + "\nE: " + err + "\nT:" + turn);
     }
 
     @Override
