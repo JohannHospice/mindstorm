@@ -20,15 +20,19 @@ public class ColorFollowingV3 extends ColorApplicationListener {
 
     private boolean running = true;
 
-    private float kp = 10, speed = 50;
+    private float kp = 100, speed = 500;
     private double mid;
 
     public ColorFollowingV3(Engine engine, ArrayList<ColorList> colorSamples) {
         super(engine.getColorSensor());
         lMotor = engine.getLeftMotor();
         rMotor = engine.getRightMotor();
+
         for (ColorList colorSample : colorSamples)
             colorList.add(colorSample.getAverage());
+
+        double l0 = colorList.get(0).lum(), l1 = colorList.get(1).lum();
+        mid = (l1 - l0) / 2 + l0;
     }
 
     @Override
@@ -36,30 +40,29 @@ public class ColorFollowingV3 extends ColorApplicationListener {
         System.out.println("start:colorFollowing");
         lMotor.forward();
         rMotor.forward();
-
-        mid = colorList.get(0).deltaE(colorList.get(1)) / 2;
     }
 
     @Override
     public void act() {
-        if (Button.waitForAnyPress() == Button.ID_ESCAPE) {
+        if (Button.readButtons() == Button.ID_ESCAPE)
             running = false;
-        }
 
         fetchSample();
 
-        Color c = new Color(getSample());
+        float err = (float) (mid - Color.lum(getSample()));
 
-        float turn = (float) (kp * error(c));
+        float turn = kp * err;
+
         lMotor.setSpeed(speed + turn);
-        lMotor.setSpeed(speed - turn);
+        rMotor.setSpeed(speed - turn);
+        System.out.println("M:" + mid + "\nE: " + err + "\nT:" + turn);
     }
 
     @Override
     public void end() {
+        System.out.println("end:colorFollowing");
         lMotor.stop();
         rMotor.stop();
-        System.out.println("end:colorFollowing");
     }
 
     @Override
@@ -67,9 +70,4 @@ public class ColorFollowingV3 extends ColorApplicationListener {
         return running;
     }
 
-    private double error(Color c) {
-        double d0 = colorList.get(0).deltaE(c),
-                d1 = colorList.get(1).deltaE(c);
-        return mid - (d0 > d1 ? d1 : d0);
-    }
 }

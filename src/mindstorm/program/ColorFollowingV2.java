@@ -14,13 +14,13 @@ import java.util.ArrayList;
  * sinon si à droite de la ligne alors tourner à gauche
  */
 public class ColorFollowingV2 extends ColorFollowingListener {
-    private static final int SEARCH_TIME = 1000;
+    private static int searchTime = 65;
 
     private boolean onLeftSide = true, onLine = false, directionChangedOnce = false;
     private int counter = 0;
 
     public ColorFollowingV2(Engine engine, ArrayList<ColorList> colorSamples) {
-        super(engine, colorSamples, 0, 500);
+        super(engine, colorSamples, 0, 250);
     }
 
     @Override
@@ -36,6 +36,14 @@ public class ColorFollowingV2 extends ColorFollowingListener {
             case Button.ID_DOWN:
                 incMaxSpeed(-2);
                 System.out.println("S:" + getMaxSpeed());
+                break;
+            case Button.ID_RIGHT:
+                searchTime += 2;
+                System.out.println("ST:" + searchTime);
+                break;
+            case Button.ID_LEFT:
+                searchTime -= 2;
+                System.out.println("ST:" + searchTime);
                 break;
         }
     }
@@ -60,7 +68,7 @@ public class ColorFollowingV2 extends ColorFollowingListener {
                     onLine = false;
                 }
 
-                if (!directionChangedOnce && counter >= SEARCH_TIME) {
+                if (!directionChangedOnce && counter >= searchTime) {
                     onLeftSide = !onLeftSide;
                     directionChangedOnce = true;
                 }
