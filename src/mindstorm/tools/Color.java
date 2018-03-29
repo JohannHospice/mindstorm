@@ -74,4 +74,11 @@ public class Color {
         return sample[i];
     }
 
+    public double lum() {
+        return 0.21 * getR() + 0.72 * getG() + 0.07f * getB();
+    }
+
+    public static double lum(float[] sample) {
+        return (new Color(sample)).lum();
+    }
 }

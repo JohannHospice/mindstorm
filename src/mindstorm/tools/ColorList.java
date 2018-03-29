@@ -25,12 +25,12 @@ public class ColorList extends ArrayList<Color> {
         int minIndex = -1;
         for (int i = 0; i < size(); i++) {
             double distance = get(i).deltaE(color);
-            if (minDistance > distance && minDistance <= tolerateDistance) {
+            if (minDistance > distance) {
                 minDistance = distance;
                 minIndex = i;
             }
         }
-        return minIndex;
+        return minDistance <= tolerateDistance ? minIndex : -1;
     }
 
 }

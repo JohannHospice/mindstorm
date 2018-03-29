@@ -31,17 +31,13 @@ public class ColorFollowingV3 extends ColorApplicationListener {
             colorList.add(colorSample.getAverage());
     }
 
-    private static int percentTo(int a, int b) {
-        return a * b / 100;
-    }
-
     @Override
     public void start() {
         System.out.println("start:colorFollowing");
         lMotor.forward();
         rMotor.forward();
 
-        mid = colorList.get(0).deltaE(colorList.get(1));
+        mid = colorList.get(0).deltaE(colorList.get(1)) / 2;
     }
 
     @Override
@@ -72,6 +68,8 @@ public class ColorFollowingV3 extends ColorApplicationListener {
     }
 
     private double error(Color c) {
-        return mid - colorList.get(0).deltaE(c);
+        double d0 = colorList.get(0).deltaE(c),
+                d1 = colorList.get(1).deltaE(c);
+        return mid - (d0 > d1 ? d1 : d0);
     }
 }
