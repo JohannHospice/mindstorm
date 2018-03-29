@@ -52,3 +52,10 @@
    - un robot qui cherche la ligne seulement soit à driote soit à gauche
 ** À faire: 
    - permettre au robot de zigzaguer pour chercher la ligne
+
+* <16-03-2018>
+** Fait:
+   - Plusieurs algo, mais ce n'est pas tres vite
+** À faire: 
+   - Faire la conversion entre RGB et luminosité pour essayer de faire PID
+   - Peut-être faire un algo que fait un zig-zag dans la ligne
