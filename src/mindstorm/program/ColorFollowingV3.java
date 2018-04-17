@@ -11,29 +11,27 @@ import java.util.ArrayList;
 
 /**
  * algorithme:
- * si à gauche de la ligne alors tourner à droite
- * sinon si à droite de la ligne alors tourner à gauche
  */
 public class ColorFollowingV3 extends ColorApplicationListener {
     private static final float CONTROL_STEP = 10;
 
     private final EV3LargeRegulatedMotor lMotor, rMotor;
-    private final ColorList colorList = new ColorList();
 
     private boolean running = true;
-    private float kp = 1250, speed = 200;
-    private double mid;
+    private int kp = 1250, speed = 200;
+    private double midLum;
 
     public ColorFollowingV3(Engine engine, ArrayList<ColorList> colorSamples) {
         super(engine.getColorSensor());
         lMotor = engine.getLeftMotor();
         rMotor = engine.getRightMotor();
 
+        ColorList colorList = new ColorList();
         for (ColorList colorSample : colorSamples)
             colorList.add(colorSample.getAverage());
 
         double l0 = colorList.get(0).lum(), l1 = colorList.get(1).lum();
-        mid = (l1 - l0) / 2 + l0;
+        midLum = (l1 - l0) / 2 + l0;
     }
 
     @Override
@@ -69,12 +67,12 @@ public class ColorFollowingV3 extends ColorApplicationListener {
 
         fetchSample();
 
-        float err = (float) (mid - Color.lum(getSample()));
-
-        float turn = kp * err;
+        float turn = (float) (kp * (midLum - Color.lum(getSample())));
 
         lMotor.setSpeed(speed + turn);
         rMotor.setSpeed(speed - turn);
+        lMotor.forward();
+        rMotor.forward();
     }
 
     @Override

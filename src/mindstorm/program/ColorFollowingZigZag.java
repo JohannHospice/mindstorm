@@ -13,11 +13,12 @@ import java.util.ArrayList;
  * sinon si à droite de la ligne alors tourner à gauche
  */
 public class ColorFollowingZigZag extends ColorFollowingListener {
-	private boolean left = true; 
-	private boolean changedDirection = false;
+    private boolean left = true;
+    private boolean changedDirection = false;
+    private static final int SPEED = 600, K = 45;
 
     public ColorFollowingZigZag(Engine engine, ArrayList<ColorList> colorSamples) {
-        super(engine, colorSamples, 200, percentTo(200, 45));
+        super(engine, colorSamples, SPEED, percentTo(SPEED, K));
     }
 
     private static int percentTo(int a, int b) {
@@ -36,6 +37,12 @@ public class ColorFollowingZigZag extends ColorFollowingListener {
             case Button.ID_DOWN:
                 incMaxSpeed(-2);
                 break;
+            case Button.ID_RIGHT:
+                incMinSpeed(2);
+                break;
+            case Button.ID_LEFT:
+                incMinSpeed(-2);
+                break;
         }
     }
 
@@ -44,18 +51,17 @@ public class ColorFollowingZigZag extends ColorFollowingListener {
         switch (colorId) {
             case 0:
                 if (left) {
-                	goLeft();
-                	changedDirection = false;
-                }                
-                else {
-                	goRight();
-                	changedDirection = false;
+                    goLeft();
+                    changedDirection = false;
+                } else {
+                    goRight();
+                    changedDirection = false;
                 }
                 break;
             case 1:
                 if (!changedDirection) {
-                	left = !left;
-                	changedDirection = true;
+                    left = !left;
+                    changedDirection = true;
                 }
                 break;
         }
